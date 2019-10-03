@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Pojo from "@/components/design/Pojo";
+import PojoDetail from "@/components/design/pojo/PojoDetail";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     mode: 'history',
@@ -16,7 +16,24 @@ export default new Router({
         {
             path: "/design/pojo",
             name: "pojo",
-            component: () => import('./components/design/Pojo')
-        }
+            component: () => import('./components/design/pojo/Pojo'),
+            children: [
+                {
+                    path: "",
+                    name: "pojoList",
+                    component: () => import('./components/design/pojo/PojoList'),
+                },
+                {
+                    path: "detail",
+                    name: "pojoDetail",
+                    component: PojoDetail
+                },
+                {
+                    path: "new",
+                    name: "pojoCreate",
+                    component: () => import("./components/design/pojo/PojoDetail")
+                }
+            ]
+        },
     ]
 })

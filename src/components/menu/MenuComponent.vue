@@ -3,6 +3,8 @@
             default-active="1"
             :router="true"
             :unique-opened="true"
+            style="background-color: #E4E7ED"
+
     >
         <el-submenu v-for="(item,index) in menuList" :key="index" :index="index+''">
             <template slot="title">
@@ -40,7 +42,8 @@
     export default {
         name: "MenuComponent",
         props: {
-            menuList: Array
+            menuList: Array,
+            actHeight:Number
         },
     }
 </script>

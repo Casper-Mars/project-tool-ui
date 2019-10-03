@@ -1,11 +1,11 @@
 <template>
     <el-container>
-        <el-header>
+        <el-header style="background-color: #EBEEF5">
             <main-header/>
         </el-header>
         <el-main>
             <el-container>
-                <el-aside>
+                <el-aside style="background-color: #E4E7ED">
                     <menu-view/>
                 </el-aside>
                 <el-main>
