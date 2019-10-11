@@ -27,7 +27,7 @@
         name: "PojoRule",
         props: {
             submit: Function,
-            attr:Object
+            attr: Object
         },
         methods: {
             _submit: function () {
@@ -39,11 +39,19 @@
         },
         data() {
             return {
-                labelPosition:"right",
+                labelPosition: "right",
                 tmpRule: this.attr.rule
             }
-
+        },
+        watch: {
+            attr: {
+                immediate: true,
+                handler(val) {
+                    this.tmpRule = val.rule;
+                }
+            }
         }
+
     }
 </script>
 

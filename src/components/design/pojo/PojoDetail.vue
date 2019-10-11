@@ -64,35 +64,21 @@
                 title="新增属性"
                 :visible.sync="attrPanel"
         >
-            <el-form>
-                <el-form-item label="属性名称">
-                    <el-input v-model="newAttr.name"></el-input>
-                </el-form-item>
-                <el-form-item label="属性类型">
-                    <el-select v-model="newAttr.type">
-                        <el-option v-for="(item,index) in typeList" :key="index" :value="item">
-                            {{item}}
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="属性描述">
-                    <el-input v-model="newAttr.desc"></el-input>
-                </el-form-item>
-            </el-form>
-            <el-divider/>
-            <el-button type="primary" @click="addNewAttr">确认</el-button>
+            <pojo-add-new-attr :call-back="addNewAttr"/>
         </el-dialog>
     </div>
 
 </template>
 
 <script>
-    import PojoRule from "@/components/design/pojo/PojoRule";
+    import PojoRule from "./PojoRule";
+    import PojoAddNewAttr from "./PojoAddNewAttr";
 
     export default {
         name: "PojoDetail",
         components: {
-            PojoRule
+            PojoRule,
+            PojoAddNewAttr
         },
         methods: {
             showRule: function (row) {
@@ -108,24 +94,10 @@
             },
             initAddAttrPanel: function () {
                 this.attrPanel = true;
-                this.newAttr.name = "";
-                this.newAttr.desc = "";
-                this.newAttr.type = "";
             },
-            addNewAttr: function () {
-                console.log(this.newAttr);
-                let target = {
-                    name: this.newAttr.name,
-                    type: this.newAttr.type,
-                    desc: this.newAttr.desc
-                };
-                target['rule'] = {
-                    pattern: "",
-                    max: "",
-                    min: "",
-                    notNull: 0
-                };
-                this.testTableData.push(target);
+            addNewAttr: function (data) {
+                console.log(data);
+                this.testTableData.push(data);
                 this.attrPanel = false;
             }
         },
@@ -153,15 +125,6 @@
                 ],
                 curAttr: {},
                 attrPanel: false,
-                newAttr: {
-                    type: "",
-                    name: "",
-                    desc: ""
-                },
-                typeList: [
-                    "java.lang.String",
-                    "java.lang.Long"
-                ]
             }
         },
     }
