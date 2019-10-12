@@ -5,12 +5,14 @@ import store from './store'
 import './registerServiceWorker'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
+import api from "./api/api";
 
 
 Vue.use(ElementUI);
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.$api = api;
 
 new Vue({
     router,

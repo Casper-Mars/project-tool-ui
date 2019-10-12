@@ -18,12 +18,12 @@
                         icon: "el-icon-setting",
                         children: [
                             {
-                                index: "/sys/setting/doc",
-                                name: "接口文档",
+                                index: "/sys/setting/base",
+                                name: "基础设置"
                             },
                             {
-                                index: "/sys/setting/code",
-                                name: "代码生成"
+                                index: "/sys/setting/doc",
+                                name: "接口文档",
                             },
                             {
                                 index: "/sys/setting/database",

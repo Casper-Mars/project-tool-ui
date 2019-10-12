@@ -14,6 +14,16 @@ export default new Router({
             component: () => import('./components/setting/Document')
         },
         {
+            path: '/sys/setting/base',
+            name: 'document',
+            component: () => import('./components/setting/Base')
+        },
+        {
+            path: '/sys/setting/database',
+            name: 'document',
+            component: () => import('./components/setting/Database')
+        },
+        {
             path: "/design/pojo",
             name: "pojo",
             component: () => import('./components/design/pojo/Pojo'),
