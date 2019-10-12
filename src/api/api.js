@@ -6,12 +6,14 @@ function apiCall(url, method, headers, params, success, failure, error) {
     url = config.publicPath + url;
     url = formatUrl(url);
 
-    // const loading = this.$loading({
-    //     lock: true,
-    //     text: 'Loading',
-    //     spinner: 'el-icon-loading',
-    //     background: 'rgba(0, 0, 0, 0.7)'
-    // });
+
+    let loading = ElementUI.Loading.service({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+    });
+
 
     if (!headers) {
         headers = {}
@@ -24,7 +26,7 @@ function apiCall(url, method, headers, params, success, failure, error) {
         params: method === 'get' || method === 'delete' ? params : null,
         headers: headers
     }).then((data) => {
-        // loading.close();
+        loading.close();
         if (data.status === 200) {
             success(data.data);
         } else {
@@ -32,7 +34,7 @@ function apiCall(url, method, headers, params, success, failure, error) {
         }
     }).catch(function (err) {
         console.log(err);
-        // loading.close();
+        loading.close();
         if (err) {
             let res = err.response;
             ElementUI.Message.warning('api error');
