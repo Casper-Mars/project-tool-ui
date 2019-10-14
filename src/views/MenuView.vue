@@ -36,6 +36,10 @@
                         icon: "el-icon-s-management",
                         children: [
                             {
+                                name: "模块设计",
+                                index: "/design/module"
+                            },
+                            {
                                 name: "接口设计",
                                 index: "/design/interface"
                             },

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PojoDetail from "@/components/design/pojo/PojoDetail";
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -45,5 +46,17 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: "/design/module",
+            name: "module",
+            component: () => import("./views/ModuleView"),
+            children: [
+                {
+                    path: "",
+                    name: "moduleList",
+                    component: () => import("./components/design/module/ModuleList")
+                }
+            ]
+        }
     ]
 })
