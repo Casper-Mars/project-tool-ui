@@ -1,5 +1,8 @@
 <template>
     <el-container>
+        <el-header>
+            {{this.$router.params.name}}
+        </el-header>
         <el-main>
             <el-table
                     :data="tableData"
@@ -32,11 +35,15 @@
 <script>
     export default {
         name: "ModuleList",
+        props: {
+            list: Array,
+            name: String
+        },
         data() {
             return {
                 tableData: []
             }
-        }
+        },
     }
 </script>
 
