@@ -51,15 +51,14 @@ export default new Router({
             name: "module",
             component: () => import("./views/ModuleView"),
             children: [
-                // {
-                //     path: "",
-                //     name: "moduleList",
-                //     component: () => import("./components/design/module/ModuleList"),
-                //     props: (route) => ({
-                //         list: route.query.list,
-                //         name: route.query.name
-                //     })
-                // }
+                {
+                    path: "",
+                    name: "moduleList",
+                    component: () => import("./components/design/module/ModuleList"),
+                    props: {
+                        id: "0",
+                    }
+                }
             ]
         }
     ]
