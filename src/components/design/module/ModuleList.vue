@@ -5,7 +5,7 @@
             <el-form v-model="curModule" v-if="curModule.id !=='0'">
                 <el-form-item>
                     <el-button @click="backTo">返回上一页</el-button>
-                    <el-button type="primary">保存</el-button>
+                    <el-button type="primary" @click="updateModule">保存</el-button>
                 </el-form-item>
                 <el-form-item label="名称" style="width: 200px">
                     <el-input v-model="curModule.name"/>
@@ -113,7 +113,7 @@
                     (data) => {
                         let code = data.code;
                         if (code !== 200) {
-                            this.$message.error("添加失败");
+                            this.$message.error("添加失败,msg:" + data.msg);
                         } else {
                             this.$message.success("添加成功");
                             this.refresh(this.curModule.id);
@@ -134,6 +134,32 @@
             },
             backTo: function () {
                 this.refresh(this.curModule.parentId);
+            },
+            updateModule: function () {
+                let dto = new ModuleDto();
+                dto.name = this.curModule.name;
+                dto.desc = this.curModule.desc;
+                dto.id = this.curModule.id;
+                this.$api.put(
+                    '/api/module',
+                    dto,
+                    (data) => {
+                        let code = data.code;
+                        let msg = data.msg;
+                        if (code === 200) {
+                            this.$message.success("修改成功");
+                        } else {
+                            this.$message.error(msg);
+                        }
+                    },
+                    (data) => {
+
+                    },
+                    (res) => {
+
+                    }
+                );
+
             }
 
         }

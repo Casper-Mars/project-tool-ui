@@ -42,7 +42,7 @@ export default new Router({
                 {
                     path: "new",
                     name: "pojoCreate",
-                    component: () => import("./components/design/pojo/PojoDetail")
+                    component: () => import("./components/design/pojo/PojoNew")
                 }
             ]
         },

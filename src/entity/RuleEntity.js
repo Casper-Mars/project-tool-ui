@@ -1,12 +1,10 @@
-class Rule {
+class RuleEntity {
     constructor() {
         this.pattern = "";
         this.max = "";
         this.min = "";
-        this.notNull = 0;
+        this.notNull = false;
     }
 }
 
-export default Rule;
-
-
+export default RuleEntity

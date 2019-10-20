@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import PojoAttrEntity from '../../../entity/pojo/PojoAttrEntity'
+    import AttrEntity from "@/entity/AttrEntity";
     export default {
         name: "PojoAddNewAttr",
         props: {
@@ -41,7 +41,7 @@
         },
         data() {
             return {
-                newAttr: new PojoAttrEntity(),
+                newAttr: new AttrEntity(),
                 typeList: []
             }
         }
