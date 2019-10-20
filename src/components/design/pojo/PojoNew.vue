@@ -3,7 +3,7 @@
         <el-container>
             <el-main>
                 <el-row>
-                    <el-form v-model="curPojo" label-position="right">
+                    <el-form v-model="curPojo" label-position="right" label-width="80px" style="width: 300px">
                         <el-form-item label="名称">
                             <el-input v-model="curPojo.name"/>
                         </el-form-item>
@@ -15,7 +15,7 @@
                             </el-cascader>
                         </el-form-item>
                         <el-form-item label="类型">
-                            <el-select v-model="curPojo.type">
+                            <el-select v-model="curPojo.type" :value="curPojo.type">
                                 <el-option v-for="(item,index) in pojoTypeList" :value="item.code" :key="item.code"
                                            :label="item.name">
                                 </el-option>
@@ -24,8 +24,8 @@
                     </el-form>
                 </el-row>
                 <el-divider>属性</el-divider>
-                <el-row style="float: left">
-                    <el-button type="primary">添加属性</el-button>
+                <el-row>
+                    <el-button type="primary" @click="addingPanel=true">添加属性</el-button>
                 </el-row>
                 <el-row>
                     <el-table
@@ -57,26 +57,50 @@
                 <el-button type="primary" @click="addOrUpdatePojo">保存</el-button>
             </el-footer>
         </el-container>
-        <el-container>
-            <el-dialog
+        <el-dialog
                 title="添加属性"
                 :visible.sync="addingPanel"
-            >
-                <el-form v-model="curAttr">
-                    <el-form-item label="名称">
-                        <el-input v-model="curAttr.name"/>
-                    </el-form-item>
-                    <el-form-item label="描述">
-                        <el-input v-model="curAttr.desc"/>
-                    </el-form-item>
-                    <el-form-item label="类型">
-                        <el-select v-model="curAttr.refId">
-
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-            </el-dialog>
-        </el-container>
+        >
+            <el-container>
+                <el-main>
+                    <el-form v-model="curAttr" label-position="right">
+                        <el-form-item label="名称">
+                            <el-input v-model="curAttr.name"/>
+                        </el-form-item>
+                        <el-form-item label="描述">
+                            <el-input v-model="curAttr.desc"/>
+                        </el-form-item>
+                        <el-form-item label="类型">
+                            <el-input v-model="curAttr.type"/>
+                            <el-button type="primary" size="small" round @click="refPanel=true">添加引用</el-button>
+                        </el-form-item>
+                        <el-form-item label="是否可空">
+                            <el-radio-group v-model="curAttr.rule.notNull">
+                                <el-radio :label="true">可空</el-radio>
+                                <el-radio :label="false">非空</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="最大值">
+                            <el-input v-model="curAttr.rule.max"/>
+                        </el-form-item>
+                        <el-form-item label="最小值">
+                            <el-input v-model="curAttr.rule.min"/>
+                        </el-form-item>
+                        <el-form-item label="正则表达式">
+                            <el-input v-model="curAttr.rule.pattern"/>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+                <el-footer>
+                    <el-button type="primary">确认</el-button>
+                </el-footer>
+            </el-container>
+        </el-dialog>
+        <el-dialog
+                title="添加属性引用"
+                :visible.sync="refPanel"
+        >
+        </el-dialog>
     </el-container>
 </template>
 
@@ -95,7 +119,8 @@
             return {
                 curPojo: new PojoDto(),
                 moduleLists: [],
-                addingPanel:false,
+                addingPanel: false,
+                refPanel: false,
                 props: {
                     value: "id",
                     label: "name"
@@ -106,7 +131,7 @@
                         name: "test",
                         type: "String",
                         desc: "test",
-                        refId:'',
+                        refId: '',
                         rule: new RuleEntity(),
                     }
                 ],
@@ -167,7 +192,12 @@
 
 <style scoped>
 
-    .el-form-item {
+    .el-form {
+        width: 400px;
+    }
+
+    .el-input {
         width: 200px;
     }
+
 </style>
