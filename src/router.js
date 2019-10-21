@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PojoDetail from "@/components/design/pojo/PojoDetail";
 
 
 Vue.use(Router);
@@ -37,7 +36,7 @@ export default new Router({
                 {
                     path: "detail",
                     name: "pojoDetail",
-                    component: PojoDetail
+                    component: () => import('./components/design/pojo/PojoDetail')
                 },
                 {
                     path: "new",
