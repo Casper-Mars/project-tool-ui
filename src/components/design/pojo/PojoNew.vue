@@ -37,7 +37,7 @@
                         ></el-table-column>
                         <el-table-column
                                 label="类型"
-                                prop="type"
+                                prop="classpath"
                         ></el-table-column>
                         <el-table-column
                                 label="描述"
@@ -71,7 +71,7 @@
                             <el-input v-model="curAttr.desc"/>
                         </el-form-item>
                         <el-form-item label="类型">
-                            <el-input v-model="curAttr.type"/>
+                            <el-input v-model="curAttr.classpath"/>
                             <el-button type="primary" size="small" round @click="refPanel=true">添加引用</el-button>
                         </el-form-item>
                         <el-form-item label="是否可空">
@@ -92,7 +92,7 @@
                     </el-form>
                 </el-main>
                 <el-footer>
-                    <el-button type="primary">确认</el-button>
+                    <el-button type="primary" @click="addAttr">确认</el-button>
                 </el-footer>
             </el-container>
         </el-dialog>
@@ -100,6 +100,33 @@
                 title="添加属性引用"
                 :visible.sync="refPanel"
         >
+            <el-container>
+                <el-main>
+                    <el-table
+                            :data="pojoRefList"
+                    >
+                        <el-table-column
+                                prop="name"
+                                label="名称"
+                        ></el-table-column>
+                        <el-table-column
+                                prop="classpath"
+                                label="类路径"
+                        ></el-table-column>
+                        <el-table-column
+                                prop="desc"
+                                label="描述"
+                        ></el-table-column>
+                        <el-table-column
+                                label="操作"
+                        >
+                            <template slot-scope="scope">
+                                <el-button type="primary" size="small" @click="selectRef(scope.row)">选择</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-main>
+            </el-container>
         </el-dialog>
     </el-container>
 </template>
@@ -114,6 +141,7 @@
         mounted() {
             this.initModuleList();
             this.initTypeList();
+            this.initPojoRefList();
         },
         data() {
             return {
@@ -126,10 +154,11 @@
                     label: "name"
                 },
                 pojoTypeList: [],
+                pojoRefList: [],
                 tableData: [
                     {
                         name: "test",
-                        type: "String",
+                        classpath: "String",
                         desc: "test",
                         refId: '',
                         rule: new RuleEntity(),
@@ -140,7 +169,26 @@
         },
         methods: {
             addOrUpdatePojo: function () {
+                this.curPojo.attrs = this.tableData;
+                const moduleIds = this.curPojo.moduleId;
+                this.curPojo.moduleId = moduleIds[moduleIds.length - 1];
                 console.log(this.curPojo);
+                this.$api.post(
+                    '/api/pojo',
+                    this.curPojo,
+                    (data) => {
+                        let code = data.code;
+                        if (code !== 200) {
+                            this.$message.error(data.msg);
+                        }
+                    },
+                    (data) => {
+
+                    },
+                    (data) => {
+
+                    }
+                );
             },
             initModuleList: function () {
                 this.$api.get(
@@ -183,6 +231,35 @@
             },
             addAttr: function () {
 
+                this.tableData.push(this.curAttr);
+                this.addingPanel = false;
+                this.curAttr = new AttrEntity();
+            },
+            selectRef: function (ref) {
+                this.curAttr.refId = ref.id;
+                this.curAttr.classpath = ref.classpath;
+                this.refPanel = false;
+            },
+            initPojoRefList: function () {
+                this.$api.get(
+                    '/api/pojo/ref/list',
+                    null,
+                    (data) => {
+                    debugger;
+                        let code = data.code;
+                        if (code !== 200) {
+                            // this.$message.error("");
+                        } else {
+                            this.pojoRefList = data.data;
+                        }
+                    },
+                    (data) => {
+
+                    },
+                    (data) => {
+
+                    },
+                );
             }
 
         }
